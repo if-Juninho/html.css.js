@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namorar</title>
+    <style>
+        * {
+            background-color: #D8BFD8;
+        }
+
+        input {
+            background-color: white;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: LightGrey;
+        }
+        .caixa1 {
+            background-color: WhiteSmoke;
+            color: black;
+            width: 1100px;
+            height: 30px;
+            margin-top: -10px;
+            margin-bottom: 30px;
+
+
+        }
+        .caixa2 {
+            background-color: WhiteSmoke;
+            color: black;
+            width: 1100px;
+            height: 110px;
+            margin-top: -10px;
+            margin-bottom: 30px;
+            margin-top: -10px;
+            margin-bottom: 30px;
+            overflow-y: auto;
+            overflow-x: auto;
+            margin: 1px 0px 10px 6px;
+            border: 2px dashed rgb(224,255,255);
+            padding: 1px;
+
+
+        }
+        .caixa3 {
+            background-color: WhiteSmoke;
+            color: black;
+            width: 1100px;
+            height: 150px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            margin-top: -10px;
+            margin-bottom: 30px;
+            overflow-y: auto;
+            overflow-x: auto;
+            margin: 1px 0px 1px 1px;
+            border: 2px dashed rgb(224,255,255);
+;
+
+        }
+
+        p {
+            background-color: WhiteSmoke;
+            color: black;
+            padding-top: 0px;
+
+        }
+    </style>
+</head>
+<body>
+    <h1>Calcular idade para Namoro</h1>
+    
+    <h3>Solteiro(a) procurar namorar (1 pessoa)</h3>
+    <input type="text" id="idade1" placeholder="Digite a idade">
+    <button onclick="solteiro()">Solteiro(a)</button>
+    <div class="caixa1">
+        <p id="resultado1"></p>
+    </div>
+
+
+    <h3>Pode ser namorado(a) (2 pessoas)</h3>
+    <input type="text" id="idade2" placeholder="Digite a idade da 1° pessoa">
+    <input type="text" id="idade3" placeholder="Digite a idade da 2° pessoa">
+    <button onclick="verificarNamoro()">Namorado(a)</button>
+    <div class="caixa2">
+        <p id="resultadoNamorad"></p>
+        <p id="resultado2"></p>
+        <p id="resultado3"></p>
+    </div>
+
+
+  
+    <h3>Trisal (3 pessoas)</h3>
+    <input type="text" id="idade4" placeholder="Digite a idade da 1° pessoa">
+    <input type="text" id="idade5" placeholder="Digite a idade da 2° pessoa">
+    <input type="text" id="idade6" placeholder="Digite a idade da 3° pessoa">
+    <button onclick="trisal()">Trisal</button>   
+    <div class="caixa3">
+        <p id="resultadoTrisal"></p>
+        <p id="resultado4"></p>
+        <p id="resultado5"></p>
+        <p id="resultado6"></p>
+    </div>
+    <br>
+    <button onclick="limparResultados()">Limpar Resultados</button>
+
+    <script>
+        function solteiro() {
+            var idade = Number(document.getElementById("idade1").value);
+            var resultado = (idade / 2) + 7;
+            var linha = "";
+            for (var j = resultado; j <= idade; ++j) {
+                linha += Math.floor(j) + ", ";
+            }
+            linha = linha.slice(0, -2);
+            if (resultado % 2 != 0) {
+                resultado = Math.floor(resultado);
+            }
+            if (idade < 13) {
+                document.getElementById("resultado1").innerText = `Você não pode namorar!`;
+            } else if (idade > 100) {
+                document.getElementById("resultado1").innerText = `Sua idade: ${idade} acima de 100 anos não podem namorar`;
+            } else {
+                document.getElementById("resultado1").innerText = `Você só pode namorar alguém a partir dos: ${linha}`;
+            }
+        }
+
+       function verificarNamoro() {
+            var idade2 = Number(document.getElementById("idade2").value);
+            var idade3 = Number(document.getElementById("idade3").value);
+            var idades = [idade2, idade3];
+            var resultados = [];
+            var podeser = 0;
+            
+            for (var i = 0; i < idades.length; i++) {
+                var linha = "";
+                if (idades[i] < 13) {
+                    resultados.push(`Idade: ${idades[i]} - Você não pode namorar!`);
+                } else if (idades[i] > 100) {
+                    resultados.push(`Idade: ${idades[i]} - Acima de 100 anos não podem namorar`);
+                } else {
+                    var resultado = (idades[i] / 2) + 7;
+                    for (var j = resultado; j <= idades[i]; ++j) {
+                        linha += Math.floor(j) + ", ";
+                    }
+                    linha = linha.slice(0, -2);
+                    resultados.push(`${idades[i]} pessoa só pode namorar alguém a partir dos: ${linha}`);
+                    podeser++;
+                }
+            }
+            
+            document.getElementById("resultado2").innerText = resultados[0];
+            document.getElementById("resultado3").innerText = resultados[1];
+
+            if (podeser === 2) {
+                document.getElementById("resultadoNamorad").innerText = `\nIdades: ${idades[0]} e ${idades[1]} - As pessoas podem formar um namorar.`;
+            } else {
+                document.getElementById("resultadoNamorad").innerText = `\nNÃO é possível formar um namorar com essas idades.`;
+            }
+
+        } 
+
+        function trisal() {
+            var idade4 = Number(document.getElementById("idade4").value);
+            var idade5 = Number(document.getElementById("idade5").value);
+            var idade6 = Number(document.getElementById("idade6").value);
+            var idades = [idade4, idade5, idade6];
+            var podeser = 0;
+            var linha = "";
+            var resultados = [];
+
+            for (var i = 0; i < idades.length; i++) {
+                resultado = (idades[i] / 2) + 7;
+                for (var j = resultado; j <= idades[i]; ++j) {
+                    linha += Math.floor(j) + ", ";
+                }
+                linha = linha.slice(0, -2);
+                if (resultado % 2 != 0) {
+                    resultado = Math.floor(resultado);
+                }
+                if (idades[i] < 13) {
+                    resultados.push(`Idade: ${idades[i]} - Você não pode namorar!`);
+                    break;
+                 } else if (idades[i] > 100) {
+                    resultados.push(`Idade: ${idades[i]} - Acima de 100 anos não podem namorar`);
+                } else {
+                    var resultado = (idades[i] / 2) + 7;
+                    for (var j = resultado; j <= idades[i]; ++j) {
+                        linha += Math.floor(j) + ", ";
+                    }
+                    linha = linha.slice(0, -2);
+                    resultados.push(`${idades[i]} pessoa só pode namorar alguém a partir dos: ${linha}`);
+                    podeser++;
+                }
+            }
+            
+            document.getElementById("resultado4").innerText = resultados[0];
+            document.getElementById("resultado5").innerText = resultados[1];
+            document.getElementById("resultado6").innerText = resultados[2];
+
+            if (podeser === 3) {
+                document.getElementById("resultadoTrisal").innerText = `\nIdades: ${idades[0]}, ${idades[1]} e ${idades[2]} - As pessoas podem formar um trisal.`;
+            } else {
+                document.getElementById("resultadoTrisal").innerText = `\nNÃO é possível formar um trisal com essas idades.`;
+            }
+
+        }
+
+        function limparResultados() {
+            document.getElementById("idade1").value = "";
+            document.getElementById("idade2").value = "";
+            document.getElementById("idade3").value = "";
+            document.getElementById("idade4").value = "";
+            document.getElementById("idade5").value = "";
+            document.getElementById("idade6").value = "";
+
+            document.getElementById("resultado1").innerText = "";
+            document.getElementById("resultado2").innerText = "";
+            document.getElementById("resultado3").innerText = "";
+            document.getElementById("resultado4").innerText = "";
+            document.getElementById("resultado5").innerText = "";
+            document.getElementById("resultado6").innerText = "";
+            document.getElementById("resultadoTrisal").innerText = "";
+            document.getElementById("resultadoNamorad").innerText = "";
+            
+        }
+
+    </script>
+</body>
+</html>
